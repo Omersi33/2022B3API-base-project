@@ -10,8 +10,21 @@ export class UserService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {}
+  
   async createUser(body: CreateUserDto): Promise<User> {
     const newUser = this.usersRepository.create(body)
     return this.usersRepository.save(newUser)
+  }
+
+  async findOne(email: string): Promise<User | undefined> {
+    return this.usersRepository.findOneBy({email: email});
+  }
+
+  async findOneId(id: string): Promise<User | undefined> {
+    return this.usersRepository.findOneBy({id: id});
+  }
+
+  async findAll(): Promise<User[]> {
+    return this.usersRepository.find();
   }
 }
